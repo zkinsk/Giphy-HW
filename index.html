@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" >
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css" />
+    <title>Giphy Page</title>
+  </head>
+  <body>
+        <div id="buttonBox"></div>
+        <div id="addButtonBox">
+            <form>
+                <div class="form-group">
+                    <label for="FormControlSelect1">Gifs to Return</label>
+                    <select class="form-control-sm" id="gifNumber">
+                    <option>1</option>
+                    <option>5</option>
+                    <option>10</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <!-- <label for="FormControlInput1">Topic to Add</label> -->
+                    <input type="text" class="form-control-sm" id="newTopic" placeholder="add topic">
+                    <div class="btn-group dropright">
+                        <button type="button" value="new-topic" class="btn btn-primary btn-sm" >Submit</button>
+                        <button type="button" class="btn btn-primary btn-sm dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <div class="dropdown-menu">
+                            <button class="dropdown-item" value="remove-topic" type="button" data-toggle="tooltip" data-placement="top" title="click this then click to remove 1 topic">Remove Topic</button>
+                            <button class="dropdown-item" value="clearGifs" type="button">Clear Gifs</button>
+                            <button class="dropdown-item" value="favGifs" type="button">Add to Favorites</button>
+                            <button class="dropdown-item" value="showFavs" type="button">Show My Favorite Gifs</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div id="gifBox">
+                <!-- <img class="gif" src="https://media0.giphy.com/media/cfuL5gqFDreXxkWQ4o/200_s.gif" data-still="https://media0.giphy.com/media/cfuL5gqFDreXxkWQ4o/200_s.gif" data-animate="https://media0.giphy.com/media/cfuL5gqFDreXxkWQ4o/200.gif" data-state="stopped" gifid="cfuL5gqFDreXxkWQ4o" data-toggle="tooltip" data-placement="top" title="Rated: g"> -->
+        </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" crossorigin="anonymous"></script>
+    <script src="assets/javascript/main.js"></script>
+  </body>
+</html>
