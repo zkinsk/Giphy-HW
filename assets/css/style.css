@@ -21,9 +21,17 @@
 }
 .btn {
     margin: 2px;
-}
-.btn {
     background-color: #cd6913db;
+    color: #fff
+}
+.btn:hover {
+    background-color: #fe8013db;
+}
+.dropdown-menu {
+    background-color: #fe8013db;
+}
+#newTopic, #gifNumber{
+    background-color: hsla(28, 100%, 89%, 0.859);
 }
 #gifBox {
     background-color: #cd6913db;

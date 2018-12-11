@@ -198,8 +198,48 @@ function drawGifs(giphyObj){
 }
 // data-toggle="tooltip" data-placement="top"
 
+// function getCookie() {
+//     var name = cname + "=";
+//     var decodedCookie = decodeURIComponent(document.cookie);
+//     var ca = decodedCookie.split(';');
+//     for(var i = 0; i <ca.length; i++) {
+//       var c = ca[i];
+//       while (c.charAt(0) == ' ') {
+//         c = c.substring(1);
+//       }
+//       if (c.indexOf(name) == 0) {
+//         return c.substring(name.length, c.length);
+//       }
+//     }
+//     return "";
+//   }
+
+  function checkFAvCookie() {
+    // var favCook = document.cookie;
+    // console.log("fave cook" + favCook)
+    // if (favCook != "") {
+    //  alert("Got Cookie");
+    //  testCook = document.cookie;
+    //  console.log("Test Cook if; " + testCook)
+    // } else {
+    Cookies.set('favCookie', 'bob');
+      favCookArr = JSON.stringify(favTestArr)
+        console.log("Cook ARR: " + favCookArr);
+        let testCook = Cookies.get('favCookie');
+        console.log("Test Cook Else; " + testCook);
+    // }
+  }
 
 
+
+// var json_str = JSON.stringify(arr);
+// createCookie('mycookie', json_str);
+// Later on, to retrieve the cookie's contents as an array:
+
+// var json_str = getCookie('mycookie');
+// var arr = JSON.parse(json_str);
+
+var favTestArr = ["aaaaaaa", "bbbbbbb", "ccccccc"];
 $( document ).ready(function() {
     bottonPopulate(topicArr);
     buttonClick();
@@ -207,6 +247,7 @@ $( document ).ready(function() {
     gifHover();
     addTopic();
     buttonDropDown();
+    checkFAvCookie();
 
 // end of document.read
 });
