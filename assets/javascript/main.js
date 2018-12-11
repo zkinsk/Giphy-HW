@@ -222,11 +222,13 @@ function drawGifs(giphyObj){
     //  testCook = document.cookie;
     //  console.log("Test Cook if; " + testCook)
     // } else {
-    Cookies.set('favCookie', 'bob');
+    Cookies.set('favCookie', favTestArr);
       favCookArr = JSON.stringify(favTestArr)
         console.log("Cook ARR: " + favCookArr);
         let testCook = Cookies.get('favCookie');
         console.log("Test Cook Else; " + testCook);
+        let testCookArr = JSON.parse(testCook);
+        console.log("TestCookArr: " + testCookArr);
     // }
   }
 
