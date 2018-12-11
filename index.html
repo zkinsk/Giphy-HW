@@ -12,7 +12,8 @@
         <div class="conatiner">
             <div id="buttonBox"></div>
             <div id="addButtonBox">
-                <form action="#" id="butnForm">
+                <!-- <form action="#" id="butnForm"> -->
+                <form>
                     <div class="form-group">
                         <label for="FormControlSelect1">Gifs to Return</label>
                         <select class="form-control-sm" id="gifNumber" data-type="gifNum">
@@ -21,9 +22,9 @@
                         <option>10</option>
                         </select>
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group"> -->
                         <!-- <label for="FormControlInput1">Topic to Add</label> -->
-                        <input type="text" class="form-control-sm" id="newTopic" placeholder="add topic">
+                        <!-- <input type="text" class="form-control-sm" id="newTopic" placeholder="add topic">
                         <div class="btn-group dropright">
                             <button type="button" value="new-topic" class="btn btn-primary btn-sm" >Submit</button>
                             <button type="button" class="btn btn-primary btn-sm dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -36,9 +37,30 @@
                                 <button class="dropdown-item" value="showFavs" type="button">Show My Favorite Gifs</button>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </form>
+ 
             </div>
+            <nav class="navbar sticky-top navbar-light justify-content-center align-items-center">
+                    <form action="#" id="butnForm">
+                        <div class="form-group">
+                            <!-- <label for="FormControlInput1">Topic to Add</label> -->
+                            <input type="text" class="form-control-sm" id="newTopic" placeholder="add topic">
+                            <div class="btn-group dropright">
+                                <button type="button" value="new-topic" class="btn btn-primary btn-sm" >Add It!</button>
+                                <button type="button" class="btn btn-primary btn-sm dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <div class="dropdown-menu">
+                                    <button class="dropdown-item" value="remove-topic" type="button" data-toggle="tooltip" data-placement="top" title="click then select topic to remove">Remove Topic</button>
+                                    <button class="dropdown-item" value="clearGifs" type="button">Clear Gifs</button>
+                                    <button class="dropdown-item" value="resetTopic" type="button" data-toggle="tooltip" data-placement="top" title="Reset Next Topic">Reset topic</button>
+                                    <button class="dropdown-item" value="showFavs" type="button">Show My Favorite Gifs</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form> 
+            </nav>
             <div id="gifBox" class="row justify-content-center">
                 <div class = "col-md-8">
                     <div class="row gifRow">

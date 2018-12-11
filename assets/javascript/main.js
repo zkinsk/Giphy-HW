@@ -7,7 +7,6 @@ var resetTopic = false;
 
 
 // giphy api key = 4hOSx38y08m8D16miIeYgpnQTT2nKkae
-// giphy cat query var queryURL = "https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=cats";
 
 function bottonPopulate(arrType){
     $("#buttonBox").empty();
@@ -18,8 +17,6 @@ function bottonPopulate(arrType){
     }
 
 }
-
-/* <button type="button" value="cat" class="btn btn-primary btn-sm">Cat</button> */
 
 function buttonClick(){
     $(document).on("click", ".topicBtn", function(){
@@ -145,7 +142,7 @@ function addTopic(){
 }
 
 
-
+// calls giphy api via AJAX - calls both a search query and specific gifs by ID
 function callGihpy(topic, offSet, gifNumber, type){
     var queryURL;
     var ajAy = ["https://api.giphy.com/v1/gifs/search?api_key=4hOSx38y08m8D16miIeYgpnQTT2nKkae&limit=" + gifNumber + "&offset=" + offSet + "&q=" + topic, "https://api.giphy.com/v1/gifs?api_key=4hOSx38y08m8D16miIeYgpnQTT2nKkae&ids="];
@@ -163,7 +160,7 @@ function callGihpy(topic, offSet, gifNumber, type){
             drawGifs(giphyObj);
         });
 }
-
+// draws the gifs on the DOM - adds attribute data from the JSON object from giphy
 function drawGifs(giphyObj){
     if( ($(".gifRow .gifCol0").is(":empty"))  && ($(".gifRow .gifCol1").is(":empty")) && ($(".gifRow .gifCol2").is(":empty")) ){
         rowCount = 0
@@ -181,8 +178,8 @@ function drawGifs(giphyObj){
         if (favArr.includes(gifID)){
             gifStar.attr({"fav-state":"faved", "gifID": gifID});
             gifStar.css("color", "red");
-        }else{gifStar.attr({"gifID": gifID});
-        gifStar.attr("fave-state", "notfaved")
+        }else{gifStar.attr({"gifID": gifID, "fave-state": "notfaved"});
+        // gifStar.attr("fave-state", "notfaved")
         };
         let cGif = $("<img>").addClass("gif");
         cGif.attr({"src": cGifurl, "data-still": cGifStill, "data-animate": cGifAnimate, "data-state": "stopped", "gifID": gifID});

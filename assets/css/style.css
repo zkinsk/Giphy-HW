@@ -3,12 +3,18 @@
     clear: both;
     display: table;
   }
+  body, .navbar {
+    background-color: #61c7c0;
+  }
+ 
 #buttonBox{
+    /* background-color: #61c7c0;   */
     width: 70%;
     margin: 10px auto 10px auto;
     text-align: center;
 }
 #addButtonBox{
+    /* background-color: #61c7c0; */
     width: 30%;
     margin: 10px auto 10px auto;
     text-align: center;
@@ -16,8 +22,12 @@
 .btn {
     margin: 2px;
 }
+.btn {
+    background-color: #cd6913db;
+}
 #gifBox {
     background-color: #cd6913db;
+    background-image: url("../images/pineapple-cut.png");
     margin: auto;
     /* width: 70%; */
     min-height: 600px;
@@ -52,4 +62,7 @@
     left: 8px;
     color: yellow;
     padding: 10px;
+}
+#butnForm {
+    height: 30px;
 }
