@@ -1,6 +1,7 @@
 var topicArr = ["Art", "Fine Art", "Photography", "Statues", "Painting", "Sculpting", "Mountain Bike", "Hiking", "Climbing", "Dirt Bike", "Jumping", "Surfing", "Jellyfish"];
 // var favArr = [];
-var favArr = JSON.parse(localStorage.getItem("favDB"));
+// var favArr = JSON.parse(localStorage.getItem("favDB"));
+var favArr = [];
 console.log("Fav Arr: " + favArr);
 var buttonDel = false;
 var addFav = false;
@@ -190,6 +191,10 @@ function drawGifs(giphyObj){
 }
 
 $( document ).ready(function() {
+    if ( JSON.parse(localStorage.getItem("favDB")) !== null ){
+        favArr = JSON.parse(localStorage.getItem("favDB"))
+    };
+    console.log(JSON.parse(localStorage.getItem("favDB")));
     bottonPopulate(topicArr);
     buttonClick();
     gifClick();
