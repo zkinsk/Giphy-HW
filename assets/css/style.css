@@ -4,19 +4,26 @@
     display: table;
   }
   body, .navbar {
+    /* background-color: #61c7c0; */
+    margin: 0;
+  }
+  .headersz, header{
     background-color: #61c7c0;
+    /* margin: 0;
+    padding-top: 0px; */
   }
  
 #buttonBox{
     /* background-color: #61c7c0;   */
     width: 70%;
-    margin: 10px auto 10px auto;
+    margin: 0 auto 10px auto;
+    padding-top: 10px;
     text-align: center;
 }
 #addButtonBox{
     /* background-color: #61c7c0; */
     width: 30%;
-    margin: 10px auto 10px auto;
+    margin: 10px auto 0px auto;
     text-align: center;
 }
 .btn {
@@ -30,8 +37,12 @@
 .dropdown-menu {
     background-color: #fe8013db;
 }
+.form-group{
+    margin-bottom: 0px
+}
 #newTopic, #gifNumber{
     background-color: hsla(28, 100%, 89%, 0.859);
+    margin-bottom: 0
 }
 #gifBox {
     background-color: #cd6913db;

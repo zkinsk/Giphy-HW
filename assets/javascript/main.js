@@ -122,7 +122,7 @@ function addTopic(){
             $("#newTopic").val("");
         };
     })
-    $("#butnForm").on('keyup', function(event){ 
+    $("#newTopic").on('keyup', function(event){ 
         event.preventDefault();
         let newT = $("#newTopic").val();
         if(event.keyCode == 13){ 
@@ -185,7 +185,7 @@ function drawGifs(giphyObj){
         cGif.attr({"src": cGifurl, "data-still": cGifStill, "data-animate": cGifAnimate, "data-state": "stopped", "gifID": gifID});
         cGif.attr({"data-toggle": "tooltip", "data-placement": "top", "title": "Rated: " + gifRating});
         gifDiv.append(cGif, gifStar);
-        if (rowCount >= 3){
+        if (rowCount >= 3 || ($(window).width()) <= 720 ){
             rowCount = 0
         };
 
@@ -227,8 +227,10 @@ function drawGifs(giphyObj){
         console.log("Cook ARR: " + favCookArr);
         let testCook = Cookies.get('favCookie');
         console.log("Test Cook Else; " + testCook);
+        console.log("Test Cook Else 1; " + testCook[1]);
         let testCookArr = JSON.parse(testCook);
         console.log("TestCookArr: " + testCookArr);
+        console.log("TestCookArr: 1 " + testCookArr[1]);
     // }
   }
 
@@ -249,7 +251,19 @@ $( document ).ready(function() {
     gifHover();
     addTopic();
     buttonDropDown();
-    checkFAvCookie();
+    // checkFAvCookie();
+
+    window.addEventListener("resize", function() {
+        if (window.matchMedia("(min-width: 500px)").matches) {
+            console.log("Screen width is at least 500px");
+        } else {
+            console.log("Screen less than 500px");
+        }
+    });
+
+   console.log("window Width: " + $(window).width());
+   console.log("Doc Width: " + $(document).width()); 
+    
 
 // end of document.read
 });
