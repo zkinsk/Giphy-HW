@@ -1,5 +1,7 @@
-var topicArr = ["cats", "puppies", "fish", "owls", "kids", "falling down", "skunks", "nerds", "parades"];
-var favArr = [];
+var topicArr = ["Art", "Fine Art", "Photography", "Statues", "Painting", "Sculpting", "Mountain Bike", "Hiking", "Climbing", "Dirt Bike", "Jumping", "Surfing", "Jellyfish"];
+// var favArr = [];
+var favArr = JSON.parse(localStorage.getItem("favDB"));
+console.log("Fav Arr: " + favArr);
 var buttonDel = false;
 var addFav = false;
 var rowCount = 0;
@@ -17,7 +19,7 @@ function bottonPopulate(arrType){
     }
 
 }
-
+// topic button clicks
 function buttonClick(){
     $(document).on("click", ".topicBtn", function(){
         if (buttonDel == true){
@@ -43,7 +45,7 @@ function buttonClick(){
         }
     })
 }
-
+// drop down button fuctionality
 function buttonDropDown(){
     $(":button[value='remove-topic']").on("click", function(){
         buttonDel = true;
@@ -57,29 +59,14 @@ function buttonDropDown(){
     })
     $(":button[value='showFavs']").on("click", function(){
         $(".gifCols").empty();
-        callGihpy(0, 0, 0, 1);
+        let favArrDB = JSON.parse(localStorage.getItem("favDB"))
+        callGihpy(0, 0, 0, 1, favArrDB);
     })
-    $(document).on("click", ".gifStar", function(){
-        if(($(this).attr("fave-state")) == "notfaved"){
-            // alert("not fav")
-            $(this).css("color", "red").attr("fave-state", "faved");
-            let fav = $(this).attr("gifID");
-            if(!favArr.includes(fav)){
-            favArr.push(fav);}
 
-        }
-        else{
-            $(this).css("color", "yellow").attr("fave-state", "notfaved");
-            let fav = $(this).attr("gifID");
-            favArr.indexOf(fav);
-            favArr.splice((favArr.indexOf(fav)), 1);
-        }
-    //    alert("click")
-    })
 }
-
+// gif click functions & gif favorites
 function gifClick(){
-    $(document).on("click", ".gif", function(){
+    $("#gifBox").on("click", ".gif", function(){
         console.log(favArr)
             let stop = $(this).attr("data-still");
             let anim = $(this).attr("data-animate");
@@ -91,27 +78,51 @@ function gifClick(){
                 $(this).attr("src", stop);
             }
     });
-}
 
+    // favories picker
+    $("#gifBox").on("click", ".gifStar", function(){
+        if(($(this).attr("fave-state")) == "notfaved"){
+            // alert("not fav")
+            $(this).css("color", "red").attr("fave-state", "faved");
+            let fav = $(this).attr("gifID");
+            if(!favArr.includes(fav)){
+            favArr.push(fav);
+            // localStorage.clear();
+            // JSON.stringify(favArr)
+            localStorage.setItem("favDB", ( JSON.stringify(favArr)) );
+            }
+
+        }
+        else{
+            $(this).css("color", "yellow").attr("fave-state", "notfaved");
+            let fav = $(this).attr("gifID");
+            favArr.indexOf(fav);
+            favArr.splice((favArr.indexOf(fav)), 1);
+            // localStorage.clear();
+            localStorage.setItem("favDB", ( JSON.stringify(favArr)) );
+        }
+    })
+}
+// hover functions
 function gifHover(){
-    $(document).on("mouseenter", ".gif", function(){
+    $("#gifBox").on("mouseenter", ".gif", function(){
         let anim = $(this).attr("data-animate");
         if ($(this).attr("data-state") === "stopped"){
             $(this).attr("src", anim);
         }
 
     });
-    $(document).on("mouseleave", ".gif", function(){
+    $("#gifBox").on("mouseleave", ".gif", function(){
         let stop = $(this).attr("data-still");
         if ($(this).attr("data-state") === "stopped"){
             $(this).attr("src", stop);
         }
-        
     });
 }
-
+// function to add new topic buttons to page
 function addTopic(){
-    $(":button[value='new-topic']").on("click", function(){
+    $(":button[value='new-topic']").on("click", function(event){
+        event.preventDefault();
         let newT = $("#newTopic").val();
         if (newT !== "" && !topicArr.includes(newT)){
             topicArr.push(newT);
@@ -122,39 +133,22 @@ function addTopic(){
             $("#newTopic").val("");
         };
     })
-    $("#newTopic").on('keyup', function(event){ 
-        event.preventDefault();
-        let newT = $("#newTopic").val();
-        if(event.keyCode == 13){ 
-          event.preventDefault();
-          if (newT !== "" && !topicArr.includes(newT)){
-            topicArr.push(newT);
-            bottonPopulate(topicArr);
-            $("#newTopic").val("");
-        }else{
-            alert("try again");
-            $("#newTopic").val("");
-        };
-          
-        }
-      });
-
 }
 
 
 // calls giphy api via AJAX - calls both a search query and specific gifs by ID
-function callGihpy(topic, offSet, gifNumber, type){
+function callGihpy(topic, offSet, gifNumber, type, favArrDB){
     var queryURL;
     var ajAy = ["https://api.giphy.com/v1/gifs/search?api_key=4hOSx38y08m8D16miIeYgpnQTT2nKkae&limit=" + gifNumber + "&offset=" + offSet + "&q=" + topic, "https://api.giphy.com/v1/gifs?api_key=4hOSx38y08m8D16miIeYgpnQTT2nKkae&ids="];
     if (type == 1){
-        queryURL = ajAy[type] + favArr;
+        queryURL = ajAy[type] + favArrDB;
     }else {
         queryURL = ajAy[type];
     }
     $.ajax({
         url: queryURL,
         method: "GET"
-      }).then(function(response) {
+    }).then(function(response) {
             console.log(response);
             giphyObj = response;
             drawGifs(giphyObj);
@@ -174,17 +168,17 @@ function drawGifs(giphyObj){
         let gifRating = giphyObj.data[i].rating;
         let gifDiv = $("<div>").addClass("gifDiv");
         let gifStar = $("<div>").addClass("gifStar fas fa-star");
-        // gifStar.attr({"fav-state": "notfaved", "gifID": gifID})
+        // checks for state of favorite to determine whether to re-draw with a red star
         if (favArr.includes(gifID)){
             gifStar.attr({"fav-state":"faved", "gifID": gifID});
             gifStar.css("color", "red");
         }else{gifStar.attr({"gifID": gifID, "fave-state": "notfaved"});
-        // gifStar.attr("fave-state", "notfaved")
         };
         let cGif = $("<img>").addClass("gif");
         cGif.attr({"src": cGifurl, "data-still": cGifStill, "data-animate": cGifAnimate, "data-state": "stopped", "gifID": gifID});
         cGif.attr({"data-toggle": "tooltip", "data-placement": "top", "title": "Rated: " + gifRating});
         gifDiv.append(cGif, gifStar);
+        // resets row count and also forces all gif in one row for responsive layour
         if (rowCount >= 3 || ($(window).width()) <= 720 ){
             rowCount = 0
         };
@@ -192,58 +186,9 @@ function drawGifs(giphyObj){
         $(".gifRow .gifCol" + rowCount).prepend(gifDiv);
         rowCount++
     }
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
-      });
+    $('[data-toggle="tooltip"]').tooltip()
 }
-// data-toggle="tooltip" data-placement="top"
 
-// function getCookie() {
-//     var name = cname + "=";
-//     var decodedCookie = decodeURIComponent(document.cookie);
-//     var ca = decodedCookie.split(';');
-//     for(var i = 0; i <ca.length; i++) {
-//       var c = ca[i];
-//       while (c.charAt(0) == ' ') {
-//         c = c.substring(1);
-//       }
-//       if (c.indexOf(name) == 0) {
-//         return c.substring(name.length, c.length);
-//       }
-//     }
-//     return "";
-//   }
-
-  function checkFAvCookie() {
-    // var favCook = document.cookie;
-    // console.log("fave cook" + favCook)
-    // if (favCook != "") {
-    //  alert("Got Cookie");
-    //  testCook = document.cookie;
-    //  console.log("Test Cook if; " + testCook)
-    // } else {
-    Cookies.set('favCookie', favTestArr);
-      favCookArr = JSON.stringify(favTestArr)
-        console.log("Cook ARR: " + favCookArr);
-        let testCook = Cookies.get('favCookie');
-        console.log("Test Cook Else; " + testCook);
-        console.log("Test Cook Else 1; " + testCook[1]);
-        let testCookArr = JSON.parse(testCook);
-        console.log("TestCookArr: " + testCookArr);
-        console.log("TestCookArr: 1 " + testCookArr[1]);
-    // }
-  }
-
-
-
-// var json_str = JSON.stringify(arr);
-// createCookie('mycookie', json_str);
-// Later on, to retrieve the cookie's contents as an array:
-
-// var json_str = getCookie('mycookie');
-// var arr = JSON.parse(json_str);
-
-var favTestArr = ["aaaaaaa", "bbbbbbb", "ccccccc"];
 $( document ).ready(function() {
     bottonPopulate(topicArr);
     buttonClick();
@@ -251,15 +196,6 @@ $( document ).ready(function() {
     gifHover();
     addTopic();
     buttonDropDown();
-    // checkFAvCookie();
-
-    window.addEventListener("resize", function() {
-        if (window.matchMedia("(min-width: 500px)").matches) {
-            console.log("Screen width is at least 500px");
-        } else {
-            console.log("Screen less than 500px");
-        }
-    });
 
    console.log("window Width: " + $(window).width());
    console.log("Doc Width: " + $(document).width()); 
