@@ -72,15 +72,23 @@
 }
 .gif:hover {
     transform: scale(1.05);
-    z-index: 10;
-
+    z-index: 0;
 }
 .gifStar {
     position: absolute;
     top: 8px;
     left: 8px;
-    color: yellow;
-    padding: 10px;
+    z-index: 1;
+    color: rgba(255, 255, 0, 0.75);
+    padding: 5px;
+}
+.dlBut {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    z-index: 1;
+    color: rgba(255, 255, 0, 0.75);
+    padding: 5px;
 }
 #butnForm {
     height: 30px;

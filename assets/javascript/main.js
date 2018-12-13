@@ -95,7 +95,7 @@ function gifClick(){
 
         }
         else{
-            $(this).css("color", "yellow").attr("fave-state", "notfaved");
+            $(this).css("color", "rgba(255, 255, 0, 0.75)").attr("fave-state", "notfaved");
             let fav = $(this).attr("gifID");
             favArr.indexOf(fav);
             favArr.splice((favArr.indexOf(fav)), 1);
@@ -167,6 +167,8 @@ function drawGifs(giphyObj){
         let cGifAnimate = giphyObj.data[i].images.fixed_width.url
         let gifID = giphyObj.data[i].id;
         let gifRating = giphyObj.data[i].rating;
+        let gifDl = $("<div><a href='" + cGifAnimate + "' download><span class='fas fa-cloud-download-alt dlBut'></span></a>")
+        // .addClass("fas fa-cloud-download-alt dlBut");
         let gifDiv = $("<div>").addClass("gifDiv");
         let gifStar = $("<div>").addClass("gifStar fas fa-star");
         // checks for state of favorite to determine whether to re-draw with a red star
@@ -178,7 +180,7 @@ function drawGifs(giphyObj){
         let cGif = $("<img>").addClass("gif");
         cGif.attr({"src": cGifurl, "data-still": cGifStill, "data-animate": cGifAnimate, "data-state": "stopped", "gifID": gifID});
         cGif.attr({"data-toggle": "tooltip", "data-placement": "top", "title": "Rated: " + gifRating});
-        gifDiv.append(cGif, gifStar);
+        gifDiv.append(cGif, gifStar, gifDl);
         // resets row count and also forces all gif in one row for responsive layour
         if (rowCount >= 3 || ($(window).width()) <= 720 ){
             rowCount = 0
