@@ -2,11 +2,14 @@ var topicArr = ["Art", "Fine Art", "Photography", "Statues", "Painting", "Sculpt
 // var favArr = [];
 // var favArr = JSON.parse(localStorage.getItem("favDB"));
 var favArr = [];
+var gifArr = [];
 console.log("Fav Arr: " + favArr);
 var buttonDel = false;
 var addFav = false;
 var rowCount = 0;
 var resetTopic = false;
+var react1;
+var react2 = false;
 
 
 // giphy api key = 4hOSx38y08m8D16miIeYgpnQTT2nKkae
@@ -54,6 +57,7 @@ function buttonDropDown(){
 
     $(":button[value='clearGifs']").on("click", function(){
         $(".gifCols").empty();
+        gifArr= [];
     })
     $(":button[value='resetTopic']").on("click", function(){
         resetTopic = true;
@@ -138,14 +142,15 @@ function addTopic(){
 
 
 // calls giphy api via AJAX - calls both a search query and specific gifs by ID
-function callGihpy(topic, offSet, gifNumber, type, favArrDB){
+function callGihpy(topic, offSet, gifNumber, type, ArrDB){
     var queryURL;
     var ajAy = ["https://api.giphy.com/v1/gifs/search?api_key=4hOSx38y08m8D16miIeYgpnQTT2nKkae&limit=" + gifNumber + "&offset=" + offSet + "&q=" + topic, "https://api.giphy.com/v1/gifs?api_key=4hOSx38y08m8D16miIeYgpnQTT2nKkae&ids="];
     if (type == 1){
-        queryURL = ajAy[type] + favArrDB;
+        queryURL = ajAy[type] + ArrDB;
     }else {
         queryURL = ajAy[type];
     }
+    console.log("query URL: " + queryURL);
     $.ajax({
         url: queryURL,
         method: "GET"
@@ -165,9 +170,14 @@ function drawGifs(giphyObj){
         let cGifurl = giphyObj.data[i].images.fixed_width_still.url
         let cGifStill = giphyObj.data[i].images.fixed_width_still.url
         let cGifAnimate = giphyObj.data[i].images.fixed_width.url
+        let cGifOrig = giphyObj.data[i].images.original.url
         let gifID = giphyObj.data[i].id;
+        if (!gifArr.includes(gifID)){gifArr.push(gifID)};
+        while(gifArr.length >= 30){
+            gifArr.pop();
+        }
         let gifRating = giphyObj.data[i].rating;
-        let gifDl = $("<div><a href='" + cGifAnimate + "' download><span class='fas fa-cloud-download-alt dlBut'></span></a>")
+        let gifDl = $("<div><a href='" + cGifOrig + "' target = 'blank'><span class='fas fa-cloud-download-alt dlBut'></span></a>")
         // .addClass("fas fa-cloud-download-alt dlBut");
         let gifDiv = $("<div>").addClass("gifDiv");
         let gifStar = $("<div>").addClass("gifStar fas fa-star");
@@ -182,9 +192,13 @@ function drawGifs(giphyObj){
         cGif.attr({"data-toggle": "tooltip", "data-placement": "top", "title": "Rated: " + gifRating});
         gifDiv.append(cGif, gifStar, gifDl);
         // resets row count and also forces all gif in one row for responsive layour
-        if (rowCount >= 3 || ($(window).width()) <= 720 ){
-            rowCount = 0
+        if (rowCount >= 3 || ($(window).width()) <= 767 ){
+            rowCount = 0;
+            // react2 = true;
+        }else{
+            // react2 = false;
         };
+
 
         $(".gifRow .gifCol" + rowCount).prepend(gifDiv);
         rowCount++
@@ -206,6 +220,26 @@ $( document ).ready(function() {
 
    console.log("window Width: " + $(window).width());
    console.log("Doc Width: " + $(document).width()); 
+
+   window.addEventListener("resize", function() {
+    if ( (window.matchMedia("(min-width: 768px)").matches) ) {
+        react1 = false;
+        if (react1 != react2){
+            $(".gifCols").empty()
+            callGihpy(0, 0, 0, 1, gifArr)
+            react2 = false;
+            this.console.log("not equal large")
+        }
+    } else {
+        react1 = true;
+        if (react1 != react2){
+            $(".gifCols").empty()
+            callGihpy(0, 0, 0, 1, gifArr)
+            react2 = true;
+            this.console.log("not equal skinny")
+        }
+    }
+});
     
 
 // end of document.read
