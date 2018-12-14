@@ -106,7 +106,17 @@ function gifClick(){
             // localStorage.clear();
             localStorage.setItem("favDB", ( JSON.stringify(favArr)) );
         }
-    })
+    });
+
+//     $("#gifBox").on("click", ".dlBut", function(){
+//         let gifURL = $(this).attr("gifAddr");
+//         // FileSaver.saveAs(gifAddr, "image.gif");
+//         // import saveAs from 'file-saver';
+//         FileSaver saveAs(Blob/File/Url, optional DOMString filename, optional Object { autoBOM })
+//         var blob = new Blob(["Hello, world!"], {type: "text/plain;charset=utf-8"});
+// FileSaver.saveAs(blob, "hello world.txt");
+//     });
+    
 }
 // hover functions
 function gifHover(){
@@ -179,6 +189,7 @@ function drawGifs(giphyObj){
         }
         let gifRating = giphyObj.data[i].rating;
         let gifDl = $("<div><a href='" + cGifOrig + "' target = 'blank'><span class='fas fa-cloud-download-alt dlBut'></span></a>")
+        // let gifDl = $("<div class='fas fa-cloud-download-alt dlBut' gifAddr = '" + cGifOrig + "'>");
         // .addClass("fas fa-cloud-download-alt dlBut");
         let gifDiv = $("<div>").addClass("gifDiv");
         let gifStar = $("<div>").addClass("gifStar fas fa-star");
