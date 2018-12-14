@@ -1,19 +1,19 @@
-var topicArr = ["Art", "Fine Art", "Photography", "Statues", "Painting", "Sculpting", "Mountain Bike", "Hiking", "Climbing", "Dirt Bike", "Jumping", "Surfing", "Jellyfish"];
-// var favArr = [];
-// var favArr = JSON.parse(localStorage.getItem("favDB"));
+
+// declare global variables
+
+var topicArr = ["Perfomance Art", "Mountain Climbing", "Clouds", "Landscape", "Painting", "Sculpting", "Mountain Bike", "Hiking", "Climbing", "Dirt Bike", "Jumping", "Surfing", "Jellyfish"];
 var favArr = [];
 var gifArr = [];
-console.log("Fav Arr: " + favArr);
 var buttonDel = false;
 var addFav = false;
 var rowCount = 0;
 var resetTopic = false;
 var react1;
-var react2 = false;
-
+var react2;
 
 // giphy api key = 4hOSx38y08m8D16miIeYgpnQTT2nKkae
 
+// functions
 function bottonPopulate(arrType){
     $("#buttonBox").empty();
     for(let i = 0; i < arrType.length; i++){
@@ -173,8 +173,9 @@ function drawGifs(giphyObj){
         let cGifOrig = giphyObj.data[i].images.original.url
         let gifID = giphyObj.data[i].id;
         if (!gifArr.includes(gifID)){gifArr.push(gifID)};
-        while(gifArr.length >= 30){
-            gifArr.pop();
+        console.log("gif Arr: " + gifArr);
+        while(gifArr.length > 60){
+            gifArr.shift();
         }
         let gifRating = giphyObj.data[i].rating;
         let gifDl = $("<div><a href='" + cGifOrig + "' target = 'blank'><span class='fas fa-cloud-download-alt dlBut'></span></a>")
@@ -195,21 +196,25 @@ function drawGifs(giphyObj){
         if (rowCount >= 3 || ($(window).width()) <= 767 ){
             rowCount = 0;
             // react2 = true;
-        }else{
-            // react2 = false;
-        };
-
+        }
 
         $(".gifRow .gifCol" + rowCount).prepend(gifDiv);
         rowCount++
     }
     $('[data-toggle="tooltip"]').tooltip()
 }
+function screenCheck(){
+    if (($(window).width()) <= 767) {
+        react2 = true
+    }
+    else {react2 = false}
+};
 
 $( document ).ready(function() {
     if ( JSON.parse(localStorage.getItem("favDB")) !== null ){
         favArr = JSON.parse(localStorage.getItem("favDB"))
     };
+    screenCheck();
     console.log(JSON.parse(localStorage.getItem("favDB")));
     bottonPopulate(topicArr);
     buttonClick();
