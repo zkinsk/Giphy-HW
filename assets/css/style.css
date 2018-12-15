@@ -42,6 +42,9 @@
 .btn:hover {
     background-color: #fe8013db;
 }
+.actionButtons{
+    text-align: center;
+}
 .dropdown-menu {
     background-color: #fe8013db;
 }

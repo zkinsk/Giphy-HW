@@ -25,6 +25,7 @@ function bottonPopulate(arrType){
 }
 // topic button clicks
 function buttonClick(){
+    $("button[value='back']").hide();
     $(document).on("click", ".topicBtn", function(){
         if (buttonDel == true){
             buttonDel = false;
@@ -48,6 +49,15 @@ function buttonClick(){
             
         }
     })
+
+    $("button[value='back']").click(function(){
+        $(this).fadeOut(100);
+        $(".gifCols").empty();
+        callGihpy(0, 0, 0, 1, gifArr);
+
+    })
+ 
+
 }
 // drop down button fuctionality
 function buttonDropDown(){
@@ -64,8 +74,18 @@ function buttonDropDown(){
     })
     $(":button[value='showFavs']").on("click", function(){
         $(".gifCols").empty();
+        $("button[value='back']").fadeIn(100);
         let favArrDB = JSON.parse(localStorage.getItem("favDB"))
         callGihpy(0, 0, 0, 1, favArrDB);
+        // setTimeout(function(){ 
+        //     $("#buttonBox, #addButtonBox, .navbar").on("click", function(){
+        //         $("button[value='back']").fadeOut(100);
+        //         $("#buttonBox, #addButtonBox, .navbar").off(function(){
+        //             alert("Off")
+        //         });
+        //     });
+        // }, 100);
+
     })
 
 }
@@ -215,18 +235,42 @@ function drawGifs(giphyObj){
     $('[data-toggle="tooltip"]').tooltip()
 }
 function screenCheck(){
-    if (($(window).width()) <= 767) {
+        if (($(window).width()) <= 767) {
         react2 = true
     }
     else {react2 = false}
+
+    window.addEventListener("resize", function() {
+        if ( (window.matchMedia("(min-width: 768px)").matches) ) {
+            react1 = false;
+            if (react1 != react2){
+                $(".gifCols").empty()
+                $(".tooltip").remove();
+                callGihpy(0, 0, 0, 1, gifArr)
+                react2 = false;
+                this.console.log("not equal large")
+            }
+        } else {
+            react1 = true;
+            if (react1 != react2){
+                $(".gifCols").empty()
+                $(".tooltip").remove();
+                callGihpy(0, 0, 0, 1, gifArr)
+                react2 = true;
+                this.console.log("not equal skinny")
+            }
+        }
+    });
 };
+
+
 
 $( document ).ready(function() {
     if ( JSON.parse(localStorage.getItem("favDB")) !== null ){
         favArr = JSON.parse(localStorage.getItem("favDB"))
     };
     screenCheck();
-    console.log(JSON.parse(localStorage.getItem("favDB")));
+
     bottonPopulate(topicArr);
     buttonClick();
     gifClick();
@@ -234,28 +278,11 @@ $( document ).ready(function() {
     addTopic();
     buttonDropDown();
 
+    console.log(JSON.parse(localStorage.getItem("favDB")));
    console.log("window Width: " + $(window).width());
    console.log("Doc Width: " + $(document).width()); 
 
-   window.addEventListener("resize", function() {
-    if ( (window.matchMedia("(min-width: 768px)").matches) ) {
-        react1 = false;
-        if (react1 != react2){
-            $(".gifCols").empty()
-            callGihpy(0, 0, 0, 1, gifArr)
-            react2 = false;
-            this.console.log("not equal large")
-        }
-    } else {
-        react1 = true;
-        if (react1 != react2){
-            $(".gifCols").empty()
-            callGihpy(0, 0, 0, 1, gifArr)
-            react2 = true;
-            this.console.log("not equal skinny")
-        }
-    }
-});
+
     
 
 // end of document.read
