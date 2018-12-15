@@ -196,6 +196,7 @@ function drawGifs(giphyObj){
         rowCount = 0
         console.log("empty");
     };
+    $(".gifDiv").hide();
     for (let i = 0; i < giphyObj.data.length; i++){
         let cGifurl = giphyObj.data[i].images.fixed_width_still.url
         let cGifStill = giphyObj.data[i].images.fixed_width_still.url
@@ -208,11 +209,11 @@ function drawGifs(giphyObj){
             gifArr.shift();
         }
         let gifRating = giphyObj.data[i].rating;
-        let gifDl = $("<div><a href='" + cGifOrig + "' target = 'blank'><span class='fas fa-cloud-download-alt dlBut'></span></a>")
+        let gifDl = $("<div class='dlButton'><a href='" + cGifOrig + "' target = 'blank'><span class='fas fa-cloud-download-alt dlBut'></span></a>").css("display", "none")
         // let gifDl = $("<div class='fas fa-cloud-download-alt dlBut' gifAddr = '" + cGifOrig + "'>");
         // .addClass("fas fa-cloud-download-alt dlBut");
         let gifDiv = $("<div>").addClass("gifDiv");
-        let gifStar = $("<div>").addClass("gifStar fas fa-star");
+        let gifStar = $("<div>").addClass("gifStar fas fa-star").css("display", "none")
         // checks for state of favorite to determine whether to re-draw with a red star
         if (favArr.includes(gifID)){
             gifStar.attr({"fav-state":"faved", "gifID": gifID});
@@ -222,16 +223,18 @@ function drawGifs(giphyObj){
         let cGif = $("<img>").addClass("gif");
         cGif.attr({"src": cGifurl, "data-still": cGifStill, "data-animate": cGifAnimate, "data-state": "stopped", "gifID": gifID});
         cGif.attr({"data-toggle": "tooltip", "data-placement": "top", "title": "Rated: " + gifRating});
-        gifDiv.append(cGif, gifStar, gifDl);
+        gifDiv.append(cGif, gifStar, gifDl).css("display", "none");
         // resets row count and also forces all gif in one row for responsive layour
         if (rowCount >= 3 || ($(window).width()) <= 767 ){
             rowCount = 0;
             // react2 = true;
         }
-
+        // $(".gifStar, dlBut").hide()
         $(".gifRow .gifCol" + rowCount).prepend(gifDiv);
         rowCount++
     }
+    $(".gifDiv").fadeIn(150);
+    $(".gifStar, .dlButton").fadeIn(700);
     $('[data-toggle="tooltip"]').tooltip()
 }
 function screenCheck(){
