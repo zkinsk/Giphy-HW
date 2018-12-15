@@ -7,6 +7,7 @@
     /* background-color: #61c7c0; */
     margin: 0;
     font-family: 'Roboto', sans-serif;
+    font-weight: 300;
 /* font-family: 'Open Sans', sans-serif; */
 
   }
@@ -116,5 +117,5 @@ html, body {
     flex-shrink: 0;
     background-color: #61c7c0;
     color: #ffd6b1;
-    /* text-shadow: 0 0 1px black; */
+    /* text-shadow: 0 0 0.5px black; */
   }
